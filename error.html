@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Access Denied - Jeevan Hospital</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #10b981;
+        --primary-dark: #059669;
+        --danger-color: #dc3545;
+        --light-bg: #f0f2f5;
+        --text-dark: #212529;
+        --text-muted: #6c757d;
+      }
+
+      /* --- Theme & General Styles --- */
+      .bg-primary {
+        background-color: var(--primary-color) !important;
+      }
+      .btn-primary {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover,
+      .btn-primary:focus {
+        background-color: var(--primary-dark) !important;
+        border-color: var(--primary-dark) !important;
+        box-shadow: 0 6px 15px rgba(16, 185, 129, 0.5);
+      }
+      .text-primary {
+        color: var(--primary-color) !important;
+      }
+      .text-danger {
+        color: var(--danger-color) !important;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--light-bg);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensure full viewport height for centering */
+        color: var(--text-dark);
+      }
+
+      /* Main content centering (Crucial for vertical alignment) */
+      .main-content {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        text-align: center;
+        background: linear-gradient(135deg, #e0f2f1 0%, #ffffff 100%);
+      }
+
+      /* The error card container */
+      .error-container {
+        max-width: 550px;
+        background-color: #ffffff;
+        padding: 30px; /* Reduced vertical padding from 40px to 30px */
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .error-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* --- Size Reductions for Height (Key Changes) --- */
+
+      /* Animated Icon */
+      .error-icon {
+        font-size: 4rem; /* Reduced from 5rem to 4rem */
+        margin-bottom: 10px; /* Reduced vertical margin */
+        color: var(--danger-color);
+        animation: pulseAndShake 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulseAndShake {
+        0% { transform: scale(1) rotate(0deg); opacity: 1; }
+        10% { transform: scale(1.03) rotate(-1deg); opacity: 0.98; }
+        20% { transform: scale(1) rotate(1deg); opacity: 1; }
+        30% { transform: scale(1.01) rotate(-0.5deg); opacity: 0.99; }
+        40% { transform: scale(1) rotate(0.5deg); opacity: 1; }
+        50% { transform: scale(1) rotate(0deg); opacity: 1; }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+      }
+
+      /* Main Title */
+      .error-title {
+        font-size: 3rem; /* Reduced from 3.5rem to 3rem */
+        font-weight: 800;
+        margin-bottom: 0.25rem; /* Reduced vertical margin */
+        color: var(--text-dark);
+        letter-spacing: -1px;
+      }
+
+      /* Subtitle/Short Message */
+      .error-subtitle {
+        font-size: 1.3rem; /* Reduced from 1.5rem to 1.3rem */
+        font-weight: 600;
+        margin-bottom: 15px; /* Reduced vertical margin */
+        color: var(--text-muted);
+        line-height: 1.4;
+      }
+
+      /* Descriptive Image */
+      .error-image {
+        max-width: 50%; /* Reduced width for a more compact card */
+        height: auto;
+        margin: 0 auto 20px auto; /* Centered and reduced vertical margin */
+        display: block;
+        border: 1px solid var(--danger-color);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border-radius: 0.5rem;
+      }
+
+      /* Button Size */
+      .btn-lg {
+        border-radius: 0.75rem;
+        padding: 0.65rem 1.8rem; /* Reduced button padding */
+        font-size: 1.15rem; /* Reduced button font size */
+        font-weight: bold;
+      }
+
+      /* Utility for RGB colors for rgba() */
+      .text-primary {
+        --primary-color-rgb: 16, 185, 129;
+      }
+      .text-danger {
+        --danger-color-rgb: 220, 53, 69;
+      }
+
+      /* Removed unused footer-sticky class as it's not present in the body markup */
+    </style>
+  </head>
+  <body>
+    <div class="main-content">
+      <div class="error-container">
+        <div class="error-content">
+          <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+
+          <h1 class="error-title">
+            <span class="text-danger">ACCESS</span> DENIED
+          </h1>
+          <h2 class="error-subtitle">
+            <span class="text-danger">🛑</span> You're not supposed to be here
+          </h2>
+
+          <img
+            src="https://img.freepik.com/free-vector/system-update-concept-illustration_114360-1793.jpg?w=826&t=st=1698061400~exp=1698062000~hmac=a4b5d6e7f8g9h0i1j2k3l4m5n6o7p8q9r0s1t2u3v4w5x6y7z"
+            alt="Locked System"
+            class="error-image"
+          />
+
+          <a href="index.html" class="btn btn-primary btn-lg shadow">
+            <i class="fas fa-undo-alt mr-2"></i> Return to Base
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

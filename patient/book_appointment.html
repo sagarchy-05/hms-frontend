@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Appointment - Jeevan Hospital</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- Theme Variables (Emerald Green) --- */
+      :root {
+        --primary-color: #10b981; /* Emerald Green */
+        --primary-dark: #059669;
+        --secondary-color: #f0fdfa;
+      }
+      /* Theme overrides for Bootstrap components */
+      .text-primary {
+        color: var(--primary-color) !important;
+      }
+      .btn-primary {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+      }
+      .bg-primary {
+        background-color: var(--primary-color) !important;
+      }
+
+      /* --- Layout and Sticky Footer Setup --- */
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f8f9fa; /* Lighter background */
+        min-height: 100vh;
+        display: flex; /* Enables flexbox for sticky footer */
+        flex-direction: column;
+      }
+      /* Allows content to expand and push the footer down */
+      .content-grow {
+        flex-grow: 1;
+      }
+
+      /* --- Datepicker and Doctor Card Styles --- */
+      .disabled-day {
+        color: #ccc !important;
+      }
+      .available-day {
+        background-color: #eaf6ff !important;
+        border-radius: 50%;
+        color: #007bff !important;
+        font-weight: 600;
+      }
+      /* Doctor card styles for selection */
+      .doctor-card {
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        background: #fff;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        cursor: pointer;
+      }
+      .doctor-card:hover {
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+      }
+      /* Highlight style for the selected doctor */
+      .doctor-card.border-primary {
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+      }
+      .doctor-name {
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 2px;
+        color: #343a40;
+      }
+      .doctor-meta {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+      }
+      .doctor-select {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      /* Styles for time slot buttons */
+      .slot-btn {
+        margin: 4px;
+        min-width: 80px;
+        border-radius: 8px;
+        font-weight: 500;
+      }
+      /* Highlight style for the selected time slot */
+      .slot-btn.active {
+        background-color: var(--primary-color);
+        color: #fff;
+        border-color: var(--primary-color);
+      }
+      .card {
+        border-radius: 12px;
+      }
+      /* Datepicker selected date background to match theme */
+      .datepicker table tr td.active.active,
+      .datepicker table tr td.active.highlighted:hover,
+      .datepicker table tr td.active:hover {
+        background-image: none;
+        background-color: var(--primary-color) !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navbar"></div>
+
+    <div class="content-grow">
+      <div class="container mt-4">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body d-flex align-items-center">
+            <h4 class="mb-0 text-primary">
+              <span role="img" aria-label="Hospital">🏥</span>
+              Book Your Appointment
+            </h4>
+          </div>
+        </div>
+
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <form id="bookForm">
+              <div class="form-group border-bottom pb-3 mb-4">
+                <label for="doctorSearch" class="font-weight-bold">
+                  Step 1: Search and Select a Doctor
+                </label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="doctorSearch"
+                    placeholder="Enter doctor's name or specialization (e.g., Cardiology)"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      type="button"
+                      id="searchDoctorBtn"
+                      class="btn btn-primary"
+                    >
+                      <span role="img" aria-label="Search">🔍</span> Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="doctorList" class="mb-4 row"></div>
+
+              <div id="appointmentDetails" style="display: none">
+                <h5 class="font-weight-bold mb-3 text-secondary">
+                  Step 2: Choose Date & Time
+                </h5>
+
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="appointmentDate" class="font-weight-bold"
+                        >Appointment Date</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="appointmentDate"
+                        readonly
+                        placeholder="Select a valid date"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="timeSlot" class="font-weight-bold"
+                        >Available Time Slots</label
+                      >
+                      <div
+                        id="timeSlot"
+                        class="d-flex flex-wrap border rounded p-2 bg-light justify-content-start"
+                      >
+                        <small class="text-muted"
+                          >Select a date to see slots</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group border-top pt-3 mt-3">
+                  <label for="reason" class="font-weight-bold"
+                    >Reason for Visit (Optional)</label
+                  >
+                  <textarea
+                    id="reason"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Briefly describe the reason for your appointment"
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-success btn-lg btn-block mt-4"
+                  style="background-color: var(--primary-dark) !important; border-color: var(--primary-dark) !important;"
+                >
+                  <span role="img" aria-label="Confirm">✅</span> Confirm
+                  Appointment
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="customAlert"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="customAlertLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="customAlertLabel">Attention</h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="customAlertBody"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/patient.js"></script>
+    <script src="../js/appointment.js"></script>
+
+    <footer
+      class="bg-primary text-white text-center py-3 mt-4"
+      style="background-color: var(--primary-color) !important"
+    >
+      <p class="mb-0">© 2025 Jeevan Hospital | All Rights Reserved</p>
+    </footer>
+  </body>
+</html>
