@@ -1,4 +1,4 @@
-var base_url = process.env.base_url || 'http://localhost:8080/api';
+
 
 // Global variables to hold patient info for delete modal
 let patientToDeleteId = null;

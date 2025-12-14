@@ -1,4 +1,3 @@
-var base_url = process.env.base_url || 'http://localhost:8080/api';
 
 // --- Helper Functions for Formatting & Small DOM Helpers ---
 

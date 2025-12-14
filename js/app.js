@@ -1,4 +1,4 @@
-var base_url = process.env.base_url || 'http://localhost:8080/api';
+var base_url = 'https://hms-backend-8kfm.onrender.com/api';
 
 $.ajaxPrefilter(function (options, originalOptions, xhr) {
   const token = localStorage.getItem('authToken');
@@ -192,6 +192,7 @@ function initAuthenticationAndLoadData() {
 }
 
 // Start the whole process
+renderNavbar(null); // Initial render as public
 initAuthenticationAndLoadData();
 
 

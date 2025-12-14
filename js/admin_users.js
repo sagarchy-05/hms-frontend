@@ -1,4 +1,4 @@
-var base_url = process.env.base_url || 'http://localhost:8080/api';
+
 
 function showToast(message, type = 'danger') {
   const container = $('#toast-container');
